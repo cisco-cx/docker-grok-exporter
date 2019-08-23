@@ -4,7 +4,8 @@
 #############################
 # Multi-Stage Build
 
-FROM golang:stretch as builder
+FROM golang:buster as builder
+ENV GO111MODULE=on
 
 # Install system deps
 #   We need this in order to build oniguruma.
@@ -30,7 +31,6 @@ RUN cd /go/src/github.com/fstab/grok_exporter && \
   git submodule update --init --recursive && \
   go get
 
-
 # Build Statically-Linked Binary
 RUN cd /go/src/github.com/fstab/grok_exporter && \
   GOOS=linux GOARCH=amd64 CGO_ENABLED=1 go build \
@@ -44,7 +44,7 @@ RUN cd /go/src/github.com/fstab/grok_exporter && \
 #############################
 # Final-Stage Build
 
-FROM alpine:latest
+FROM debian:buster-slim
 
 WORKDIR /app
 
