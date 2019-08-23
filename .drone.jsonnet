@@ -1,5 +1,5 @@
 local config = {
-  name: 'alertmanager2es',
+  name: 'grok-exporter',
   registry: 'docker.io',
   repo: 'ciscocx',
 };
